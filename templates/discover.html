@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover More</title>
+    <style>
+        body {
+            background-color: rgb(6, 6, 66);
+            color: orange;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding-top: 50px;
+            position: relative;
+        }
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            transition: all 0.3s ease;
+            filter: grayscale(100%);
+        }
+        .profile-pic:hover {
+            transform: scale(1.2);
+            filter: grayscale(0%);
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        p {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+        .options {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .options a {
+            text-decoration: none;
+            color: orange;
+            padding: 10px 20px;
+            border-radius: 20px;
+            background-color: rgb(6, 6, 66);
+            transition: all 0.3s ease;
+        }
+        .options a:hover {
+            background-color: orange;
+            color: rgb(6, 6, 66);
+        }
+        .option-block {
+            width: 100px;
+            height: 100px;
+            margin: 20px;
+            display: inline-block;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background-color: black;
+            position: relative; /* Added */
+        }
+        .option-block img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+            filter: grayscale(100%);
+        }
+        .option-block:hover img {
+            filter: grayscale(0%);
+        }
+        .option-block:hover {
+            background-color: transparent;
+            transform: scale(1.1);
+        }
+        .mini-heading {
+            font-size: 12px;
+            margin-top: 5px;
+            position: absolute; /* Added */
+            bottom: 5px; /* Added */
+            left: 50%; /* Added */
+            transform: translateX(-50%); /* Added */
+            width: 100%; /* Added */
+            color:orange;        }
+        .back-button {
+            margin-top: 30px;
+            display: block;
+            text-decoration: none;
+            color: orangered;
+            padding: 10px 20px;
+            border-radius: 20px;
+            background-color: rgb(6, 6, 66);
+            transition: all 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: orangered;
+            color: rgb(6, 6, 66);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="{{ url_for('static', filename='profile_pic_left.JPG') }}" alt="Discover Pic" class="profile-pic">
+        <h1>DISCOVER THE MUSIC 🎵</h1>
+        <p>listen fav albums, create some music or play with AI </p>
+        <div class="options">
+            <div class="option-block" onclick="location.href='link_to_albums.html';">
+                <img src="{{ url_for('static', filename='albums.jpg') }}" alt="Albums">
+                <h2 class="mini-heading">Albums</h2>
+            </div>
+            <div class="option-block" onclick="location.href='link_to_artists.html';">
+                <img src="{{ url_for('static', filename='ed.jpg') }}" alt="Artists">
+                <h2 class="mini-heading">Artists</h2>
+            </div>
+            <div class="option-block" onclick="location.href='link_to_create.html';">
+                <img src="{{ url_for('static', filename='create.jpg') }}" alt="Create">
+                <h2 class="mini-heading">Create</h2>
+            </div>
+            <div class="option-block" onclick="location.href='link_to_ai_tools.html';">
+                <img src="{{ url_for('static', filename='ai.jpg') }}" alt="AI Tools">
+                <h2 class="mini-heading">AI Tools</h2>
+            </div>
+        </div>
+        <a href="{{ url_for('index') }}" class="back-button">Back</a>
+    </div>
+</body>
+</html>

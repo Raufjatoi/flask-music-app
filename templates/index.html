@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R Music Player</title>
+    <style>
+        body {
+            background-color: rgb(6, 6, 66);
+            color: orangered;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding-top: 50px;
+            position: relative;
+        }
+        .profile-pic {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+        .logo {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+        }
+        .profile-pic-right {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+        .music-player {
+            width: 100%;
+            margin-top: 20px;
+        }
+        audio {
+            width: 100%;
+        }
+        .song-block {
+            display: inline-block;
+            margin-right: 2px;
+            margin-bottom: 2px;
+            width: 150px;
+            height: 100px;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .song-block img {
+            width: 100%;
+            height: 70%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+        .song-block p {
+            margin: 0;
+            color: white;
+            padding: 5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .song-block:hover {
+            width: 160px;
+            height: 110px;
+            border-radius: 15px;
+            background-color: rgb(6, 6, 66);
+        }
+        .song-block:hover img {
+            height: 80%;
+        }
+        .song-block:hover p {
+            color: orangered;
+        }
+        .discover-more {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .discover-more a {
+            text-decoration: none;
+            color: orange;
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 20px;
+            background-color: rgb(6, 6, 66);
+            transition: all 0.3s ease;
+        }
+        .discover-more a:hover {
+            background-color: orange;
+            color: rgb(6, 6, 66);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="{{ url_for('static', filename='profile_pic_left.jpg') }}" alt="Profile Pic" class="profile-pic">
+        <h1 class="logo">R Music Player</h1>
+        <img src="{{ url_for('static', filename='profile_pic_right.png') }}" alt="Profile Pic" class="profile-pic-right">
+        <div class="music-player">
+            <h2>Music Player</h2>
+            <audio controls id="audio-player">
+                <source src="" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="song-block" onclick="playSong('{{ url_for('static', filename='Bloodstream - Ed sheeran.mp3') }}')">
+            <img src="{{ url_for('static', filename='bloodstream.jpg') }}" alt="Bloodstream Cover">
+            <p>Bloodstream - Ed </p>
+        </div>
+        <div class="song-block" onclick="playSong('{{ url_for('static', filename='eyes.mp3') }}')">
+            <img src="{{ url_for('static', filename='eyes closed.png') }}" alt="Eyes closed Cover">
+            <p>Eyes closed - Ed</p>
+        </div>
+        <div class="song-block" onclick="playSong('{{ url_for('static', filename='eraser.mp3') }}')">
+            <img src="{{ url_for('static', filename='eraser.jpg') }}" alt="Another Cover">
+            <p>Eraser - Ed </p>
+        </div>
+        <div class="song-block" onclick="playSong('{{ url_for('static', filename='collide.mp3') }}')">
+            <img src="{{ url_for('static', filename='collide.jpg') }}" alt="Fireflies Cover">
+            <p>Collide - Ed </p>
+        </div>
+        <!-- Add more song blocks here -->
+        <div class="song-block" onclick="playSong('{{ url_for('static', filename='lego house.mp3') }}')">
+            <img src="{{ url_for('static', filename='lego house.jpg') }}" alt="Song 5 Cover">
+            <p>Lego house - Ed </p>
+        </div>
+        <div class="song-block" onclick="playSong('{{ url_for('static', filename='i feel it comin.mp3') }}')">
+            <img src="{{ url_for('static', filename='i feel it comin.jpg') }}" alt="Song 6 Cover">
+            <p>i feel it comin - week</p>
+        </div>
+        <div class="song-block" onclick="playSong('{{ url_for('static', filename='let go.mp3') }}')">
+            <img src="{{ url_for('static', filename='let go.jpg') }}" alt="Song 7 Cover">
+            <p>let go - young </p>
+        </div>
+        <div class="song-block" onclick="playSong('{{ url_for('static', filename='sign of the time.mp3') }}')">
+            <img src="{{ url_for('static', filename='sign of the time.jpg') }}" alt="Song 8 Cover">
+            <p>sign of time - harry</p>
+        </div>
+        <div class="song-block" onclick="playSong('{{ url_for('static', filename='lonely.mp3') }}')">
+            <img src="{{ url_for('static', filename='lonely.png') }}" alt="Song 9 Cover">
+            <p>lonely - img 🐉</p>
+        </div>
+        <div class="song-block" onclick="playSong('{{ url_for('static', filename='scientist.mp3') }}')">
+            <img src="{{ url_for('static', filename='s.jpg') }}" alt="Song 10 Cover">
+            <p>the scientist - coldplay</p>
+        </div>
+        <div class="song-block" onclick="playSong('{{ url_for('static', filename='somewhere.mp3') }}')">
+            <img src="{{ url_for('static', filename='somewhere.jpg') }}" alt="Song 11 Cover">
+            <p>somewhere i - lp </p>
+        </div>
+        <div class="song-block" onclick="playSong('{{ url_for('static', filename='beautiful ppl.mp3') }}')">
+            <img src="{{ url_for('static', filename='beautiful ppl.png') }}" alt="Song 12 Cover">
+            <p>beautiful ppl - ed </p>
+        </div>
+        <div class="discover-more">
+            <a href="{{ url_for('discover') }}">Discover More</a>
+        </div>
+    </div>
+
+    <script>
+        function playSong(songUrl) {
+            var audioPlayer = document.getElementById('audio-player');
+            audioPlayer.src = songUrl;
+            audioPlayer.play();
+        }
+    </script>
+</body>
+</html>
