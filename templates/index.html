@@ -165,6 +165,15 @@
             <img src="{{ url_for('static', filename='beautiful ppl.png') }}" alt="Song 12 Cover">
             <p>beautiful ppl - ed </p>
         </div>
+        
+        <div class="song-block" onclick="playSong('{{ url_for('static', filename='happy.mp3') }}')">
+           <img src="{{ url_for('static', filename='happy.jpg') }}" alt="Song 12 Cover">
+           <p>happy - NF </p>
+         </div>
+        <div class="song-block" onclick="playSong('{{ url_for('static', filename='hurt.mp3') }}')">
+            <img src="{{ url_for('static', filename='hurt.jpg') }}" alt="Song 12 Cover">
+            <p>Hurt - Cash </p>
+        </div>
         <div class="discover-more">
             <a href="{{ url_for('discover') }}">Discover More</a>
         </div>
