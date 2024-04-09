@@ -73,11 +73,11 @@
             filter: grayscale(100%);
         }
 
-        .album-item:hover .mini-heading {
+        .album-item:hover .album-name {
             color: orange;
         }
 
-        .mini-heading {
+        .album-name {
             position: absolute;
             bottom: 10px;
             left: 50%;
@@ -110,43 +110,44 @@
         <div class="album-grid">
             <div class="album-item" onclick="location.href='https://open.spotify.com/album/0MeOIA0wwSa6nW79jy8QcZ';">
                 <img src="{{ url_for('static2_files', filename='x.jpg') }}" alt="Album 1">
-                <h2 class="mini-heading">x -- ed </h2>
+                <h2 class="album-name">x -- ed </h2>
             </div>
             <div class="album-item" onclick="location.href='https://open.spotify.com/album/50ZenUP4O2Q5eCy2NRNvuz';">
                 <img src="{{ url_for('static2_files', filename='stick season.jpg') }}" alt="Album 2">
-                <h2 class="mini-heading">stick season -- Noah</h2>
+                <h2 class="album-name">stick season -- Noah</h2>
             </div>
+            <!-- Add more album items here -->
             <div class="album-item" onclick="location.href='https://open.spotify.com/album/6r1lh7fHMB499vGKtIyJLy';">
                 <img src="{{ url_for('static2_files', filename='austin.jpg') }}" alt="Album 3">
-                <h2 class="mini-heading">Austin -- post</h2>
+                <h2 class="album-name">Austin -- post</h2>
             </div>
             <div class="album-item" onclick="location.href='https://open.spotify.com/album/1KOmHyNLuOe5YrPhD3Juuf';">
                 <img src="{{ url_for('static2_files', filename='perception.jpg') }}" alt="Album 4">
-                <h2 class="mini-heading">perception -- post</h2>
+                <h2 class="album-name">perception -- post</h2>
             </div>
             <div class="album-item" onclick="location.href='https://open.spotify.com/album/02pi98kE0nra0yBqCStzbC';">
                 <img src="{{ url_for('static2_files', filename='+.jpg') }}" alt="Album 5">
-                <h2 class="mini-heading">+ -- ed </h2>
+                <h2 class="album-name">+ -- ed </h2>
             </div>
             <div class="album-item" onclick="location.href='https://open.spotify.com/album/0f7R0jf0pcTb6K6IVVPcMD';">
                 <img src="{{ url_for('static2_files', filename='meteora.jpg') }}" alt="Album 6">
-                <h2 class="mini-heading">meteora -- lp </h2>
+                <h2 class="album-name">meteora -- lp </h2>
             </div>
             <div class="album-item" onclick="location.href='https://open.spotify.com/album/6nxDQi0FeEwccEPJeNySoS';">
                 <img src="{{ url_for('static2_files', filename='night visions.jpg') }}" alt="Album 7">
-                <h2 class="mini-heading">night visions -- 🐉</h2>
+                <h2 class="album-name">night visions -- 🐉</h2>
             </div>
             <div class="album-item" onclick="location.href='https://open.spotify.com/album/6t7956yu5zYf5A829XRiHC';">
                 <img src="{{ url_for('static2_files', filename='marshal.webp') }}" alt="Album 8">
-                <h2 class="mini-heading">marshal mathers -- em</h2>
+                <h2 class="album-name">marshal mathers -- em</h2>
             </div>
             <div class="album-item" onclick="location.href='https://open.spotify.com/album/1bU12iHHt5ujHbuKcIGlpm';">
                 <img src="{{ url_for('static2_files', filename='The maybe man.jpg') }}" alt="Album 9">
-                <h2 class="mini-heading">The maybe man -- Ajr</h2>
+                <h2 class="album-name">The maybe man -- Ajr</h2>
             </div>
             <div class="album-item" onclick="location.href='https://open.spotify.com/album/621cXqrTSSJi1WqDMSLmbL';">
                 <img src="{{ url_for('static2_files', filename='The Trench.jpg') }}" alt="Album 10">
-                <h2 class="mini-heading">The Trench -- 23 </h2>
+                <h2 class="album-name">The Trench -- 23 </h2>
             </div>
         </div>
         <a href="{{ url_for('discover') }}" class="back-button">Back</a>
