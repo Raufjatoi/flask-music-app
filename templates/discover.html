@@ -118,11 +118,11 @@
                 <h2 class="mini-heading">Albums</h2>
             </div>
             
-            <div class="option-block" onclick="location.href='{{url_for('artist')}}';">
+            <div class="option-block" onclick="location.href='{{ url_for('artist') }}';">
                 <img src="{{ url_for('static', filename='ed.jpg') }}" alt="Artists">
                 <h2 class="mini-heading">Artists</h2>
             </div>
-            <div class="option-block" onclick="location.href='link_to_create.html';">
+            <div class="option-block" onclick="location.href='{{ url_for('create') }}';">
                 <img src="{{ url_for('static', filename='create.jpg') }}" alt="Create">
                 <h2 class="mini-heading">Create</h2>
             </div>
