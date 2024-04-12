@@ -3,57 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Created Music</title>
+    <title>Create Beat</title>
     <style>
         body {
-            background-color: rgb(6, 6, 66);
-            color: orange;
             font-family: Arial, sans-serif;
+            background-color: darkblue; /* Purple background */
             margin: 0;
             padding: 0;
-            text-align: center;
         }
 
         .container {
-            width: 80%;
-            margin: 0 auto;
-            padding-top: 50px;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
+            text-align: center;
+        }
+
+        #beat-maker {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             margin-top: 20px;
         }
 
-        p {
-            margin-top: 10px;
-            font-size: 18px;
+        .beat-pad {
+            width: calc(25% - 20px);
+            margin: 10px;
+            text-align: center;
+            padding: 20px;
+            background-color: rgb(21, 138, 171); /* Dark purple */
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
-        .back-button {
-            margin-top: 30px;
-            display: inline-block;
-            text-decoration: none;
-            color: orange;
+        .beat-pad:hover {
+            background-color: orange; /* Darker purple on hover */
+        }
+
+        #record-button,
+        #play-button,
+        #download-button {
+            display: block;
+            width: 100%;
             padding: 10px 20px;
-            border-radius: 20px;
-            background-color: rgb(6, 6, 66);
-            transition: all 0.3s ease;
+            margin-top: 20px;
+            background-color: orangered; /* Green */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
         }
 
-        .back-button:hover {
-            background-color: orange;
-            color: rgb(6, 6, 66);
+        #record-button:hover,
+        #play-button:hover,
+        #download-button:hover {
+            background-color: orangered; /* Darker green on hover */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Created Music</h1>
+        <h1>Create Beat</h1>
         <p>Title: {{ title }}</p>
         <p>Artist: {{ artist }}</p>
         <p>Genre: {{ genre }}</p>
-        <p>Music File: {{ filename }}</p>
-        <a href="{{ url_for('create') }}" class="back-button">Back</a>
+        <div id="beat-maker">
+            <!-- Beat pads -->
+            <div class="beat-pad" data-sound="kick">b1</div>
+            <div class="beat-pad" data-sound="snare">b2</div>
+            <div class="beat-pad" data-sound="hihat">a1</div>
+            <div class="beat-pad" data-sound="clap">💓</div>
+            <div class="beat-pad" data-sound="tom">l1</div>
+            <div class="beat-pad" data-sound="ride">shoo</div>
+            <div class="beat-pad" data-sound="crash">l2</div>
+            <div class="beat-pad" data-sound="somethin">lofi l3</div>
+            <div class="beat-pad" data-sound="loop">l4</div>
+            <div class="beat-pad" data-sound="loop2">lex</div>
+            <div class="beat-pad" data-sound="loop3">a2</div>
+            <div class="beat-pad" data-sound="idk">l6</div>
+            <!-- Add more beat pads as needed -->
+        </div>
+        <button id="record-button">Record Beat</button>
+        <button id="play-button">Play Beat</button>
+        <button id="download-button">Download Beat</button>
+        <p id="beat-length"></p>
     </div>
+
+    <!-- Audio files for each beat pad -->
+    <audio id="kick-audio" src="{{ url_for('static4_files', filename='sb8.mp3') }}"></audio>
+    <audio id="snare-audio" src="{{ url_for('static4_files', filename='b7.mp3') }}"></audio>
+    <audio id="hihat-audio" src="{{ url_for('static4_files', filename='m6.mp3') }}"></audio>
+    <audio id="clap-audio" src="{{ url_for('static4_files', filename='h5.mp3') }}"></audio>
+    <audio id="tom-audio" src="{{ url_for('static4_files', filename='sbl4.mp3') }}"></audio>
+    <audio id="ride-audio" src="{{ url_for('static4_files', filename='bsm2.m2p3') }}"></audio>
+    <audio id="crash-audio" src="{{ url_for('static4_files', filename='bm1.mp3') }}"></audio>
+    <audio id="somethin-audio" src="{{ url_for('static4_files', filename='bmlm3.mp3') }}"></audio>
+    <audio id="loop-audio" src="{{ url_for('static4_files', filename='l9.mp3') }}"></audio>
+    <audio id="loop2-audio" src="{{ url_for('static4_files', filename='l10.mp3') }}"></audio>
+    <audio id="loop3-audio" src="{{ url_for('static4_files', filename='l11.mp3') }}"></audio>
+    <audio id="idk-audio" src="{{ url_for('static4_files', filename='l12.mp3') }}"></audio>
+    <!-- Add more audio elements for additional pads -->
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const beatPads = document.querySelectorAll('.beat-pad');
+            const recordButton = document.getElementById('record-button');
+            const playButton = document.getElementById('play-button');
+            const downloadButton = document.getElementById('download-button');
+            const audioElements = document.querySelectorAll('audio');
+
+            let recordedBeat = [];
+
+            beatPads.forEach(pad => {
+                pad.addEventListener('click', () => {
+                    const sound = pad.getAttribute('data-sound');
+                    playSound(sound);
+                    if (recording) {
+                        recordedBeat.push(sound);
+                    }
+                });
+            });
+
+            let recording = false;
+            recordButton.addEventListener('click', () => {
+                recording = !recording;
+                if (recording) {
+                    recordedBeat = []; // Clear previously recorded beat
+                    recordButton.textContent = 'Stop Recording';
+                } else {
+                    recordButton.textContent = 'Record Beat';
+                    document.getElementById('beat-length').textContent = `Recorded Beat Length: ${recordedBeat.length} beats`;
+                }
+            });
+
+            playButton.addEventListener('click', () => {
+                playRecordedBeat();
+            });
+
+            function playRecordedBeat() {
+                recordedBeat.forEach((sound, index) => {
+                    setTimeout(() => {
+                        playSound(sound);
+                    }, index * 3000); // Play each sound with a delay of 3 seconds
+                });
+            }
+
+            downloadButton.addEventListener('click', () => {
+                downloadBeat();
+            });
+
+            function playSound(sound) {
+                audioElements.forEach(audio => {
+                    if (audio.id === sound + '-audio') {
+                        audio.currentTime = 0; // Restart audio if it's already playing
+                        audio.play();
+                    }
+                });
+            }
+
+            function downloadBeat() {
+                const data = JSON.stringify(recordedBeat);
+                const blob = new Blob([data], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'recorded-beat.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+        });
+    </script>
 </body>
 </html>

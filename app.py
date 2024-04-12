@@ -12,6 +12,11 @@ def static2_files(filename):
 def static3_files(filename):
     return send_from_directory('static3', filename)
 
+# Route to serve static files from 'static4' directory
+@app.route('/static4/<path:filename>')
+def static4_files(filename):
+    return send_from_directory('static4', filename)
+
 # Homepage route
 @app.route('/')
 def index():
