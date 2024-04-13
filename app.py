@@ -55,5 +55,10 @@ def cmusic():
 
     return render_template('cmusic.html', title=title, artist=artist, genre=genre, filename=filename)
 
+# Route for AI Tools page
+@app.route('/ai')
+def ai():
+    return render_template('ai.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

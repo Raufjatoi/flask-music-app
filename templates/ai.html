@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tools</title>
+    <style>
+        body {
+            background-color: rgb(6, 6, 66);
+            color: white; /* Changed to white for better visibility */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding-top: 50px;
+            position: relative;
+        }
+        .option-block {
+            width: 200px;
+            height: 200px;
+            margin: 20px;
+            display: inline-block;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        .option-block img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+            filter: grayscale(100%);
+        }
+        .option-block:hover img {
+            filter: grayscale(0%);
+        }
+        .option-block:hover {
+            transform: scale(1.1);
+        }
+        .mini-heading {
+            font-size: 18px;
+            margin-top: 10px;
+            color: orange;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Tools</h1>
+        <div class="options">
+            <div class="option-block" onclick="location.href='ai_voice.html';">
+                <img src="{{ url_for('static', filename='ai voice.jpg') }}" alt="AI Voice">
+                <h2 class="mini-heading">AI Voice</h2>
+            </div>
+            <div class="option-block" onclick="location.href='ai_beats.html';">
+                <img src="{{ url_for('static', filename='ai beats.jpg') }}" alt="AI Beats">
+                <h2 class="mini-heading">AI Beats</h2>
+            </div>
+            <div class="option-block" onclick="location.href='ai_music.html';">
+                <img src="{{ url_for('static', filename='ai music.jpg') }}" alt="AI Music">
+                <h2 class="mini-heading">AI Music</h2>
+            </div>
+            <div class="option-block" onclick="location.href='ai_song.html';">
+                <img src="{{ url_for('static', filename='ai song.jpg') }}" alt="AI Song">
+                <h2 class="mini-heading">AI Song</h2>
+            </div>
+        </div>
+        <a href="{{ url_for('discover') }}" class="back-button">Back</a>
+    </div>
+</body>
+</html>
