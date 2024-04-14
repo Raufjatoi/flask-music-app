@@ -59,6 +59,9 @@ def cmusic():
 @app.route('/ai')
 def ai():
     return render_template('ai.html')
-
+# route for text to speech 
+@app.route('/ttos')
+def ttos():
+    return render_template('ttos.html')
 if __name__ == '__main__':
     app.run(debug=True)

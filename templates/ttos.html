@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Speech</title>
+    <style>
+        body {
+            background-color: rgb(6, 6, 66);
+            color: orange;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding-top: 50px;
+            position: relative;
+        }
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            transition: all 0.3s ease;
+            filter: grayscale(100%);
+        }
+        .profile-pic:hover {
+            transform: scale(1.2);
+            filter: grayscale(0%);
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        p {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+        .options {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .options a {
+            text-decoration: none;
+            color: orange;
+            padding: 10px 20px;
+            border-radius: 20px;
+            background-color: rgb(6, 6, 66);
+            transition: all 0.3s ease;
+        }
+        .options a:hover {
+            background-color: orange;
+            color: rgb(6, 6, 66);
+        }
+        .text-to-speech-container {
+            margin-top: 50px;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        textarea {
+            width: 80%;
+            margin: 20px auto;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        input[type="number"] {
+            width: 20%;
+            margin-top: 10px;
+            padding: 5px;
+            font-size: 16px;
+        }
+        select {
+            margin-top: 10px;
+            padding: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:active {
+            background-color: #004080;
+        }
+        audio {
+            width: 80%;
+            margin: 20px auto;
+        }
+        #downloadLink {
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="{{ url_for('static', filename='profile_pic_left.JPG') }}" alt="Discover Pic" class="profile-pic">
+        <h1>TEXT TO SPEECH</h1>
+        <div class="text-to-speech-container">
+            <textarea id="textInput" rows="4" cols="50" placeholder="Enter text..."></textarea>
+            <input type="number" id="lengthInput" placeholder="Desired speech length (characters)">
+            <select id="voiceSelect">
+                <option value="">Select a voice</option>
+            </select>
+            <button id="convertBtn">Convert</button>
+            <button id="stopBtn" style="display: none;">Stop</button>
+            <a href="#" id="downloadLink" download="speech.wav">Download Speech</a>
+            <audio id="audioPlayer" controls style="display: none;"></audio>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const textInput = document.getElementById("textInput");
+            const lengthInput = document.getElementById("lengthInput");
+            const voiceSelect = document.getElementById("voiceSelect");
+            const convertBtn = document.getElementById("convertBtn");
+            const stopBtn = document.getElementById("stopBtn");
+            const downloadLink = document.getElementById("downloadLink");
+            const audioPlayer = document.getElementById("audioPlayer");
+            let speechSynthesis = window.speechSynthesis;
+            let speechUtterance = new SpeechSynthesisUtterance();
+
+            // Populate voice selection dropdown
+            function populateVoiceList() {
+                const voices = speechSynthesis.getVoices();
+                voiceSelect.innerHTML = '';
+                voices.forEach(function(voice) {
+                    const option = document.createElement('option');
+                    option.textContent = voice.name + ' (' + voice.lang + ')';
+                    option.setAttribute('data-lang', voice.lang);
+                    option.setAttribute('data-name', voice.name);
+                    voiceSelect.appendChild(option);
+                });
+            }
+
+            populateVoiceList();
+            if (speechSynthesis.onvoiceschanged !== undefined) {
+                speechSynthesis.onvoiceschanged = populateVoiceList;
+            }
+
+            convertBtn.addEventListener("click", function() {
+                const text = textInput.value;
+                const length = parseInt(lengthInput.value);
+                if (text.trim() !== "") {
+                    speechUtterance.text = text;
+                    const selectedVoice = voiceSelect.selectedOptions[0].getAttribute('data-name');
+                    const voices = speechSynthesis.getVoices();
+                    const voice = voices.find(v => v.name === selectedVoice);
+                    if (voice) {
+                        speechUtterance.voice = voice;
+                    }
+                    speechSynthesis.speak(speechUtterance);
+                    toggleButtons();
+                }
+            });
+
+            stopBtn.addEventListener("click", function() {
+                speechSynthesis.cancel();
+                toggleButtons();
+            });
+
+            function toggleButtons() {
+                convertBtn.style.display = convertBtn.style.display === "none" ? "inline-block" : "none";
+                stopBtn.style.display = stopBtn.style.display === "none" ? "inline-block" : "none";
+            }
+
+            // When speech synthesis finishes, show download link and audio player
+            speechUtterance.onend = function(event) {
+                downloadLink.style.display = "inline-block";
+                audioPlayer.src = URL.createObjectURL(new Blob([speechUtterance.audio], { type: 'audio/wav' }));
+                audioPlayer.style.display = "block";
+            };
+
+            // When download link is clicked, create a downloadable audio file
+            downloadLink.addEventListener("click", function() {
+                const blob = new Blob([speechUtterance.audio], { type: 'audio/wav' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = "speech.wav";
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                }, 0);
+            });
+        });
+    </script>
+</body>
+</html>
