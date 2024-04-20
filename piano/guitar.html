@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guitar</title>
+    <style>
+        body {
+            background-color: #0a265a;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding-top: 50px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .string {
+            width: 2px;
+            height: 200px;
+            background-color: #fff;
+            margin: 0 10px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .string.active {
+            background-color: orange;
+        }
+        .fret {
+            width: 100%;
+            height: 2px;
+            background-color: #fff;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .dot {
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            animation: pulse 0.5s ease forwards;
+        }
+        .dot.active {
+            display: block;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Add 9 strings representing different notes -->
+        <div class="string" data-note="guitar/1st_String_E.mp3"></div>
+        <div class="string" data-note="guitar/2nd_String_B.mp3"></div>
+        <div class="string" data-note="guitar/3rd_String_G.mp3"></div>
+        <div class="string" data-note="guitar/4th_String_D.mp3"></div>
+        <div class="string" data-note="guitar/5th_String_A.mp3"></div>
+        <div class="string" data-note="guitar/6th_String_E.mp3"></div>
+        <div class="string" data-note="guitar/C.mp3"></div>
+        <div class="string" data-note="guitar/Dm.mp3"></div>
+        <div class="string" data-note="guitar/e.mp3"></div>
+        
+        <!-- Add frets and dots for each string -->
+        <div class="fret" style="left: 20%;"></div>
+        <div class="fret" style="left: 40%;"></div>
+        <div class="fret" style="left: 60%;"></div>
+        <div class="fret" style="left: 80%;"></div>
+        <div class="dot" style="top: 50%; left: 20%;"></div>
+        <div class="dot" style="top: 50%; left: 40%;"></div>
+        <div class="dot" style="top: 50%; left: 60%;"></div>
+        <div class="dot" style="top: 50%; left: 80%;"></div>
+    </div>
+
+    <script>
+        const strings = document.querySelectorAll('.string');
+        const dots = document.querySelectorAll('.dot');
+
+        // Function to play audio
+        function playAudio(note) {
+            const audio = new Audio(note);
+            audio.play();
+        }
+
+        // Add event listeners to strings for mouse click
+        strings.forEach((string, index) => {
+            string.addEventListener('click', () => {
+                const note = string.dataset.note;
+                playAudio(note);
+                dots[index].classList.toggle('active');
+                setTimeout(() => {
+                    dots[index].classList.toggle('active');
+                }, 500);
+            });
+        });
+
+        // Map keyboard keys to strings
+        const keyboardMap = {
+            'a': 0,
+            's': 1,
+            'd': 2,
+            'f': 3,
+            'g': 4,
+            'h': 5,
+            'j': 6,
+            'k': 7,
+            'l': 8
+        };
+
+        // Add event listener for keyboard press
+        window.addEventListener('keydown', (e) => {
+            const key = e.key.toLowerCase();
+            if (keyboardMap.hasOwnProperty(key)) {
+                const index = keyboardMap[key];
+                const string = strings[index];
+                const note = string.dataset.note;
+                playAudio(note);
+                string.classList.add('active');
+                setTimeout(() => {
+                    string.classList.remove('active');
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>

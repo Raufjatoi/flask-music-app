@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R Piano</title>
+    <style>
+        body {
+            background-color: #0a265a;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding-top: 50px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .key {
+            width: 50px;
+            height: 200px;
+            margin: 5px;
+            background-color: #333;
+            border: 1px solid #fff;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+        }
+        .key label {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+        }
+        .key.black {
+            background-color: #000;
+            color: #fff;
+            z-index: 1;
+            margin-top: -100px;
+        }
+        .key.active {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="key" data-note="24-piano-keys/key01.ogg" data-key="65">
+            <label>ABC: A</label>
+            C
+        </div>
+        <div class="key black" data-note="24-piano-keys/key02.ogg" data-key="87">
+            <label>ABC: W</label>
+            C#
+        </div>
+        <div class="key" data-note="24-piano-keys/key03.ogg" data-key="83">
+            <label>ABC: S</label>
+            D
+        </div>
+        <div class="key black" data-note="24-piano-keys/key04.ogg" data-key="69">
+            <label>ABC: E</label>
+            D#
+        </div>
+        <div class="key" data-note="24-piano-keys/key05.ogg" data-key="68">
+            <label>ABC: D</label>
+            E
+        </div>
+        <div class="key" data-note="24-piano-keys/key06.ogg" data-key="70">
+            <label>ABC: F</label>
+            F
+        </div>
+        <div class="key black" data-note="24-piano-keys/key07.ogg" data-key="84">
+            <label>ABC: T</label>
+            F#
+        </div>
+        <div class="key" data-note="24-piano-keys/key08.ogg" data-key="71">
+            <label>ABC: G</label>
+            G
+        </div>
+        <div class="key black" data-note="24-piano-keys/key09.ogg" data-key="89">
+            <label>ABC: Y</label>
+            G#
+        </div>
+        <div class="key" data-note="24-piano-keys/key10.ogg" data-key="72">
+            <label>ABC: H</label>
+            A
+        </div>
+        <div class="key black" data-note="24-piano-keys/key11.ogg" data-key="85">
+            <label>ABC: U</label>
+            A#
+        </div>
+        <div class="key" data-note="24-piano-keys/key12.ogg" data-key="74">
+            <label>ABC: J</label>
+            B
+        </div>
+        <div class="key" data-note="24-piano-keys/key13.ogg" data-key="75">
+            <label>ABC: K</label>
+            C
+        </div>
+        <div class="key black" data-note="24-piano-keys/key14.ogg" data-key="79">
+            <label>ABC: O</label>
+            C#
+        </div>
+        <div class="key" data-note="24-piano-keys/key15.ogg" data-key="76">
+            <label>ABC: L</label>
+            D
+        </div>
+        <div class="key black" data-note="24-piano-keys/key16.ogg" data-key="80">
+            <label>ABC: P</label>
+            D#
+        </div>
+        <div class="key" data-note="24-piano-keys/key17.ogg" data-key="186">
+            <label>ABC: ;</label>
+            E
+        </div>
+        <div class="key" data-note="24-piano-keys/key18.ogg" data-key="90">
+            <label>ABC: Z</label>
+            F
+        </div>
+        <div class="key black" data-note="24-piano-keys/key19.ogg" data-key="88">
+            <label>ABC: X</label>
+            F#
+        </div>
+        <div class="key" data-note="24-piano-keys/key20.ogg" data-key="67">
+            <label>ABC: C</label>
+            G
+        </div>
+        <div class="key black" data-note="24-piano-keys/key21.ogg" data-key="86">
+            <label>ABC: V</label>
+            G#
+        </div>
+        <div class="key" data-note="24-piano-keys/key22.ogg" data-key="66">
+            <label>ABC: B</label>
+            A
+        </div>
+        <div class="key black" data-note="24-piano-keys/key23.ogg" data-key="78">
+            <label>ABC: N</label>
+            A#
+        </div>
+        <div class="key" data-note="24-piano-keys/key24.ogg" data-key="77">
+            <label>ABC: M</label>
+            B
+        </div>
+    </div>
+
+    <script>
+        const keys = document.querySelectorAll('.key');
+        const recordedNotes = [];
+
+        // Add event listeners to keys for mouse click
+        keys.forEach((key) => {
+            key.addEventListener('mousedown', () => {
+                const note = key.dataset.note;
+                playAudio(note);
+                key.classList.add('active');
+                recordedNotes.push({ time: Date.now(), note: note });
+            });
+            key.addEventListener('mouseup', () => {
+                key.classList.remove('active');
+            });
+        });
+
+        // Add event listeners to keys for keyboard press
+        window.addEventListener('keydown', (e) => {
+            const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+            if (key) {
+                const note = key.dataset.note;
+                playAudio(note);
+                key.classList.add('active');
+                recordedNotes.push({ time: Date.now(), note: note });
+            }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+            if (key) {
+                key.classList.remove('active');
+            }
+        });
+
+        // Function to play audio
+        function playAudio(note) {
+            const audio = new Audio(note);
+            audio.play();
+        }
+
+        // Define the sequence of notes for "Piano Man" or any other melody
+        const melody = [
+    { keyCode: 65, duration: 500, note: '24-piano-keys/key01.ogg' }, // A
+    { keyCode: 83, duration: 500, note: '24-piano-keys/key03.ogg' }, // S
+    { keyCode: 68, duration: 500, note: '24-piano-keys/key05.ogg' }, // D
+    { keyCode: 70, duration: 500, note: '24-piano-keys/key06.ogg' }, // F
+    { keyCode: 71, duration: 500, note: '24-piano-keys/key08.ogg' }, // G
+    { keyCode: 65, duration: 1000, note: '24-piano-keys/key10.ogg' }, // A
+    { keyCode: 83, duration: 1000, note: '24-piano-keys/key12.ogg' }, // S
+    { keyCode: 65, duration: 500, note: '24-piano-keys/key10.ogg' }, // A
+    { keyCode: 83, duration: 500, note: '24-piano-keys/key12.ogg' }, // S
+    { keyCode: 68, duration: 500, note: '24-piano-keys/key13.ogg' }, // D
+    { keyCode: 70, duration: 500, note: '24-piano-keys/key15.ogg' }, // F
+    { keyCode: 71, duration: 500, note: '24-piano-keys/key17.ogg' }, // G
+    { keyCode: 65, duration: 1000, note: '24-piano-keys/key18.ogg' }, // A
+    { keyCode: 83, duration: 1000, note: '24-piano-keys/key20.ogg' }, // S
+    { keyCode: 65, duration: 500, note: '24-piano-keys/key22.ogg' }, // A
+    { keyCode: 83, duration: 500, note: '24-piano-keys/key24.ogg' }, // S
+    { keyCode: 68, duration: 500, note: '24-piano-keys/key25.ogg' }, // D
+    { keyCode: 70, duration: 500, note: '24-piano-keys/key27.ogg' }, // F
+    { keyCode: 71, duration: 500, note: '24-piano-keys/key29.ogg' }, // G
+    { keyCode: 65, duration: 1000, note: '24-piano-keys/key30.ogg' }, // A
+    { keyCode: 83, duration: 1000, note: '24-piano-keys/key32.ogg' }, // S
+    { keyCode: 65, duration: 500, note: '24-piano-keys/key34.ogg' }, // A
+    { keyCode: 83, duration: 500, note: '24-piano-keys/key36.ogg' }, // S
+    { keyCode: 68, duration: 500, note: '24-piano-keys/key37.ogg' }, // D
+    { keyCode: 70, duration: 500, note: '24-piano-keys/key39.ogg' }, // F
+    { keyCode: 71, duration: 500, note: '24-piano-keys/key41.ogg' }, // G
+    { keyCode: 65, duration: 1000, note: '24-piano-keys/key42.ogg' }, // A
+    { keyCode: 83, duration: 1000, note: '24-piano-keys/key44.ogg' }, // S
+    { keyCode: 65, duration: 500, note: '24-piano-keys/key46.ogg' }, // A
+    { keyCode: 83, duration: 500, note: '24-piano-keys/key48.ogg' }, // S
+    { keyCode: 68, duration: 500, note: '24-piano-keys/key49.ogg' }, // D
+    { keyCode: 70, duration: 500, note: '24-piano-keys/key51.ogg' }, // F
+    { keyCode: 71, duration: 500, note: '24-piano-keys/key53.ogg' }, // G
+    { keyCode: 65, duration: 1000, note: '24-piano-keys/key54.ogg' }, // A
+    { keyCode: 83, duration: 1000, note: '24-piano-keys/key56.ogg' }, // S
+    { keyCode: 65, duration: 500, note: '24-piano-keys/key58.ogg' }, // A
+    { keyCode: 83, duration: 500, note: '24-piano-keys/key60.ogg' }, // S
+    { keyCode: 68, duration: 500, note: '24-piano-keys/key61.ogg' }, // D
+    { keyCode: 70, duration: 500, note: '24-piano-keys/key63.ogg' }, // F
+    { keyCode: 71, duration: 500, note: '24-piano-keys/key65.ogg' }, // G
+    { keyCode: 65, duration: 1000, note: '24-piano-keys/key66.ogg' }, // A
+    { keyCode: 83, duration: 1000, note: '24-piano-keys/key68.ogg' }, // S
+];
+
+            
+        
+
+        // Function to play melody automatically
+        function playMelody() {
+            let currentTime = 0;
+            melody.forEach((note) => {
+                setTimeout(() => {
+                    const key = document.querySelector(`.key[data-key="${note.keyCode}"]`);
+                    if (key) {
+                        playAudio(note.note);
+                        key.classList.add('active');
+                    }
+                }, currentTime);
+                setTimeout(() => {
+                    const key = document.querySelector(`.key[data-key="${note.keyCode}"]`);
+                    if (key) {
+                        key.classList.remove('active');
+                    }
+                }, currentTime + note.duration);
+                currentTime += note.duration;
+            });
+        }
+
+        // Call the function to play the melody automatically
+        playMelody();
+    </script>
+</body>
+</html>

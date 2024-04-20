@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automatic Guitar Player</title>
+    <style>
+        body {
+            background-color: #0a265a;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            display: flex;
+            justify-content: center;
+        }
+        .string {
+            width: 2px;
+            height: 200px;
+            background-color: #fff;
+            margin: 0 10px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .string.active {
+            background-color: orange;
+        }
+        .fret {
+            width: 100%;
+            height: 2px;
+            background-color: #fff;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .dot {
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            animation: pulse 0.5s ease forwards;
+        }
+        .dot.active {
+            display: block;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Guitar strings, frets, and dots -->
+        <div class="string" data-note="guitar/1st_String_E.mp3"></div>
+        <div class="string" data-note="guitar/2nd_String_B.mp3"></div>
+        <div class="string" data-note="guitar/3rd_String_G.mp3"></div>
+        <div class="string" data-note="guitar/4th_String_D.mp3"></div>
+        <div class="string" data-note="guitar/5th_String_A.mp3"></div>
+        <div class="string" data-note="guitar/6th_String_E.mp3"></div>
+        <div class="fret" style="left: 20%;"></div>
+        <div class="fret" style="left: 40%;"></div>
+        <div class="fret" style="left: 60%;"></div>
+        <div class="fret" style="left: 80%;"></div>
+        <div class="dot" style="top: 50%; left: 20%;"></div>
+        <div class="dot" style="top: 50%; left: 40%;"></div>
+        <div class="dot" style="top: 50%; left: 60%;"></div>
+        <div class="dot" style="top: 50%; left: 80%;"></div>
+    </div>
+
+    <script>
+        // Define your rhythm patterns and song parts here
+        const rhythmPattern = [
+            ['guitar/chord_A.mp3', 1000], // Example chords with timing (in milliseconds)
+            ['guitar/chord_C.mp3', 1000],
+            ['guitar/chord_G.mp3', 1000],
+            // Add more chords or notes as needed
+        ];
+
+        const songPart = [
+            ['guitar/note_A.mp3', 500], // Example notes with timing (in milliseconds)
+            ['guitar/note_B.mp3', 500],
+            ['guitar/note_C.mp3', 500],
+            // Add more notes or chords for the song part
+        ];
+
+        // Function to play audio
+        function playAudio(note) {
+            const audio = new Audio(note);
+            audio.play();
+        }
+
+        // Function to play rhythm pattern automatically
+        function playRhythmPattern() {
+            let index = 0;
+            const interval = setInterval(() => {
+                if (index < rhythmPattern.length) {
+                    const [note, timing] = rhythmPattern[index];
+                    playAudio(note);
+                    index++;
+                    setTimeout(() => {
+                        playRhythmPattern();
+                    }, timing);
+                } else {
+                    clearInterval(interval);
+                }
+            }, 0); // Start immediately
+        }
+
+        // Function to play song part automatically
+        function playSongPart() {
+            let index = 0;
+            const interval = setInterval(() => {
+                if (index < songPart.length) {
+                    const [note, timing] = songPart[index];
+                    playAudio(note);
+                    index++;
+                    setTimeout(() => {
+                        playSongPart();
+                    }, timing);
+                } else {
+                    clearInterval(interval);
+                }
+            }, 0); // Start immediately
+        }
+
+        // Trigger automatic playing
+        // Example: playRhythmPattern();
+        // Example: playSongPart();
+    </script>
+</body>
+</html>
