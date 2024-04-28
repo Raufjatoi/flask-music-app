@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Music App</title>
+<style>
+  body {
+    background-color: #222;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .title {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    font-size: 24px;
+    color: red;
+  }
+
+  .options {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+  }
+
+  .option {
+    margin: 0 20px;
+    cursor: pointer;
+    position: relative; 
+    transition: transform 0.2s ease-out; /* Smoother hover */
+  }
+
+  .option:hover {
+    transform: scale(1.1);
+  }
+
+  .option:hover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: orange;
+    z-index: -1;
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .profile-pic {
+    position: absolute;
+    top: 50px;
+    right: 70px; /* Adjusted right position */
+    width: 70px; /* Increased size by 20px */
+    height: 70px; /* Increased size by 20px */
+    background-image: url('rr.PNG'); /* CORRECT PATH HERE */
+    background-size: cover;
+    border-radius: 50%;  /* For square shape */
+    filter: grayscale(100%); 
+    transition: filter 0.3s ease-out; /* Smoother hover */
+  }
+
+  .profile-pic:hover {
+    filter: grayscale(0%); 
+  }
+</style>
+</head>
+<body>
+<div class="title">Music Instruments</div>
+<div class="options">
+  <div class="option" onclick="openPiano()">Piano</div>
+  <div class="option" onclick="openGuitar()">Guitar</div>
+</div>
+<div class="footer">by Rauf 😎</div>
+
+<a href="https://bento.me/rauf" class="profile-pic"></a> 
+
+<script>
+  function openPiano() {
+    window.location.href = 'piano1.html';
+  }
+
+  function openGuitar() {
+    window.location.href = 'guitar.html';
+  }
+</script>
+</body>
+</html>
