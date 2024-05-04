@@ -31,8 +31,33 @@ Currently, the AI features such as text-to-speech music are under development. S
 
 ## Demo imgs  
 
-![img1](Screenshot%202024-05-04%20223643.png)
-![GitHub Logo](https://github.com/github.png)
+![img](Screenshot%202024-05-04%20223643.png)
+The first img of my app it shows the player and the demo songs there  
+
+![img](Screenshot%202024-05-04%20223700.png)  
+img two it shows the feature the app provides like albums, artists , create and some ai 
+
+![img](Screenshot%202024-05-04%20223749.png)  
+a look to albums section , basically these are connected to spodify for noe  
+
+![img](Screenshot%202024-05-04%20223810.png)  
+a look to artists same as albums dont work much on it  
+
+![img](Screenshot%202024-05-04%20223822.png)  
+simple form when u want to create some music there 
+
+![img](Screenshot%202024-05-04%20223838.png)  
+can create a beat by ur own and maybe got lucky and it worked , well tha was kinda fun 
+
+![img](Screenshot%202024-05-04%20223853.png) 
+lasty some showcase of ai feature whom i didnt work but maybe will work just been busy with some of uni and assi annd projs but i will work on tha   
+
+so ye this was all thx for takin look here .😄
+
+
+
+
+
 
 
 
