@@ -27,7 +27,14 @@ Once the application is running, you can access it in your web browser at `http:
 
 ## AI Features (Under Development)
 
-Currently, the AI features such as text-to-speech music are under development. Stay tuned for updates!
+Currently, the AI features such as text-to-speech music are under development. Stay tuned for updates!   
+
+## Demo imgs  
+
+![img1](https://github.com/Raufjatoi/flask-music-app/blob/main/Screenshot%202024-05-04%20223643.png)
+![GitHub Logo](https://github.com/github.png)
+
+
 
 ## License
 
