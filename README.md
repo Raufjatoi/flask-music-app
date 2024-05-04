@@ -4,7 +4,7 @@ Welcome to R Music at start i just want to make it a player then i start to work
 
 ## Demo
 
-![Demo vid](https://youtu.be/mCdc-6jgun8?si=mn8Xt5WLSFR6KnLF)
+[Demo vid](https://youtu.be/mCdc-6jgun8?si=mn8Xt5WLSFR6KnLF)   
 
 ## Features
 
